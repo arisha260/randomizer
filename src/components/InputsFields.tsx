@@ -16,7 +16,7 @@ export function AddList () {
     return (
         <div className="flex-30">
             <div className="text">Введите из чего выбирать</div>
-            <div className="flex-5-r">
+            <div className="input-con">
                 <input type="text" value={value} onChange={(e) => setValue(e.target.value)} className="text input input-reset" />
                 <button onClick={() => handleClick()} className="text button btn-r">Добавить</button>
             </div>
@@ -40,7 +40,7 @@ export function AddQuantity () {
     return (
         <div className="flex-30">
             <div className="text">Сколько нужно получить</div>
-            <div className="flex-5-r">
+            <div className="input-con">
                 <input type="number" value={value} onChange={(e) => setValue(Number(e.target.value))} className="text input input-reset" />
                 <button onClick={() => handleClick()} className="text button btn-r">Получить</button>
             </div>
