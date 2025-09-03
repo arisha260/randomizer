@@ -1,10 +1,10 @@
 export function RowSvg (){
     return (
-        <svg width="11" height="11" className="svg-m" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="5" height="5" rx="1" fill="white" />
-            <rect x="6" width="5" height="5" rx="1" fill="white" />
-            <rect y="6" width="5" height="5" rx="1" fill="white" />
-            <rect x="6" y="6" width="5" height="5" rx="1" fill="white" />
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="7.27273" height="7.27273" rx="1" fill="white" />
+            <rect x="8.72705" width="7.27273" height="7.27273" rx="1" fill="white" />
+            <rect y="8.72705" width="7.27273" height="7.27273" rx="1" fill="white" />
+            <rect x="8.72705" y="8.72705" width="7.27273" height="7.27273" rx="1" fill="white" />
         </svg>
     )
 }

@@ -10,7 +10,7 @@ export function HomePageContainer () {
                 <div className="flex-30">
                     <AddList />
                     <AddQuantity />
-                    <div className="random-res text">Результат - {result}</div>
+                    <div className="random-res text">Результат: {result.join(', ')}</div>
                 </div>
                 <RandomList />
             </div>

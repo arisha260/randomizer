@@ -7,15 +7,15 @@ interface ListStore {
   addItem: (item: string) => void;
   clearList: () => void;
   removeItem: (item: string) => void;
-  result: string | string[];
-  changeResult: (result: string) => void;
+  result: string[];
+  changeResult: (result: string[]) => void;
 }
 
 export const useListStore = create<ListStore>((set) => ({
   listItems: [],
   quantity: 0,
-  result: '',
-  changeResult: (res) => set({result: res}),
+  result: [],
+  changeResult: (res) => set({ result: res }),
   changeQuantity: (value) => set({ quantity: value }),
   addItem: (item) =>
     set((state) => ({
