@@ -4,6 +4,7 @@ import { RowSvg } from "./svg/row";
 import { RemoveSvg } from "./svg/remove";
 import { useListStore } from "../stores/listStore";
 import { useDisplayStore } from "../stores/displayStore";
+import { Wheel } from "./Wheel";
 
 export function RandomList () {
     const listItems = useListStore((state) => state.listItems);
@@ -33,11 +34,14 @@ export function RandomList () {
                  </div>
             </div>
 
+            { display !== "circle" ?
             <div className={layoutClass}>
                 {listItems.map((item,ind) => (
                     <ListItem key={ind} text={item} item={item}/>
                 ))}
             </div>
+            :
+            <Wheel />}
         </div>
     )
 }

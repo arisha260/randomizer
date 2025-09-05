@@ -2,6 +2,7 @@
 @use "vars";
 @use "fonts";
 @use "settings";
+@use "components/wheel.scss";
 
 .logo{
     margin-bottom: 100px;
@@ -58,6 +59,7 @@
     font-weight: var(--fw-200);
     font-size: var(--fz-18);
     color: var(--light-color);
+    word-wrap: break-word;
 }
 
 .button{
