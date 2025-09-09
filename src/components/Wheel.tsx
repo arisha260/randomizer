@@ -121,13 +121,14 @@ export function Wheel (){
   }, [list, rotation]);
 
   const handleSpin = () => {
-    spinWheel(setRotation, rotation, setIsSpinning, list.length, { duration: 4000, spins: 6 });
+    spinWheel(setRotation, rotation, setIsSpinning, list.length);
   };
 
   return (
     <div className="wheel">
       <canvas ref={canvasRef} width={size} height={size} />
       <button className="text btn-r" onClick={handleSpin} disabled={isSpinning}>Крутить</button>
+      <button className="text btn-r" onClick={() => console.log(rotation)}>Показать rotate</button>
     </div>
   );
 }
