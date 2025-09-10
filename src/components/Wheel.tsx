@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useListStore } from "../stores/listStore";
 import { spinWheel } from "../utils/spinWheel";
+import { fitTextDynamic } from "../utils/fitTextDynamic";
 // import { getWheelSegments } from "../utils/wheelOfFortune";
 
 export function Wheel (){
@@ -21,7 +22,6 @@ export function Wheel (){
     const centerX = size / 2;
     const centerY = size / 2;
     const angleStep = (Math.PI * 2) / list.length;
-    const maxTextWidth = radius * 0.5;
 
     ctx.save();
     ctx.translate(centerX, centerY); // Сместить центр координат в центр круга
@@ -29,7 +29,7 @@ export function Wheel (){
     ctx.translate(-centerX, -centerY); // Вернуть обратно
 
     //! Отрисовка фона круга
-    ctx.fillStyle = "#646464"; // цвет круга
+    ctx.fillStyle = "#191919"; // цвет круга
     ctx.beginPath();
     ctx.arc(size / 2, size / 2, size / 2, 0, Math.PI * 2); // круг по центру
     ctx.fill();
@@ -41,7 +41,7 @@ export function Wheel (){
       const endAngle = startAngle + angleStep;
 
       // Цвет для сектора
-      ctx.fillStyle = `hsl(${(index * 360) / list.length}, 70%, 50%)`;
+      ctx.fillStyle = `#191919`;
 
       // Рисуем сектор
       ctx.beginPath();
@@ -50,49 +50,31 @@ export function Wheel (){
       ctx.closePath();
       ctx.fill();
 
+      ctx.strokeStyle = "#242424";
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
       ctx.save();
+
       ctx.translate(centerX, centerY);
-      const textAngle = startAngle + angleStep / 2;
-      ctx.rotate(textAngle);
-
-
-      // функция подгонки текста под ширину
-      function fitText(ctx: CanvasRenderingContext2D, text: string, maxWidth: number): string {
-        // Если текст уже влезает — сразу возвращаем
-        if (ctx.measureText(text).width <= maxWidth) {
-          return text;
-        }
-
-        let start = 0;
-        let end = text.length;
-        let trimmed = text;
-
-        while (start < end) {
-          const mid = Math.floor((start + end) / 2); // делим пополам
-          const candidate = text.slice(0, mid) + "...";
-
-          if (ctx.measureText(candidate).width > maxWidth) {
-            // Текст всё ещё широкий → сокращаем
-            end = mid - 1;
-          } else {
-            // Текст помещается → пробуем больше
-            trimmed = candidate;
-            start = mid + 1;
-          }
-      }
-
-        return trimmed;
-      }
-
+      const midAngle = startAngle + angleStep / 2;
+      ctx.rotate(midAngle);
 
       ctx.fillStyle = "#fff";
-      ctx.font = "16px Arial";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      const textToDraw = fitText(ctx, item, maxTextWidth);
-      ctx.fillText(textToDraw, radius * 0.7, 0);
+      // Вычисляем максимальный размер шрифта для сектора
+      const arcLength = radius * angleStep;
+      const maxWidth = arcLength * 0.8; // текст чуть меньше длины дуги
+      const maxFontSize = 20; // базовый верхний предел
+
+      // Получаем текст и размер шрифта
+      const { text: finalText, fontSize } = fitTextDynamic(ctx, item, maxWidth, maxFontSize);
+      ctx.font = `${fontSize}px Arial`;
+
+      // Рисуем текст
+      ctx.fillText(finalText, radius * 0.7, 0);
 
       ctx.restore();
     });
@@ -110,7 +92,6 @@ export function Wheel (){
 
   }
 
-
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -126,9 +107,8 @@ export function Wheel (){
 
   return (
     <div className="wheel">
-      <canvas ref={canvasRef} width={size} height={size} />
+      <canvas ref={canvasRef} width={size + 5} height={size + 5} />
       <button className="text btn-r" onClick={handleSpin} disabled={isSpinning}>Крутить</button>
-      <button className="text btn-r" onClick={() => console.log(rotation)}>Показать rotate</button>
     </div>
   );
 }

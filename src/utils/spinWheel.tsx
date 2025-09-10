@@ -52,12 +52,11 @@ export function spinWheel(
         setRotation(normalized);
 
         if (progress < 1) {
-        requestAnimationFrame(animate);
+            requestAnimationFrame(animate);
         } else {
-        setIsSpinning(false);
-        const idx = getWinnerIndex(normalized, itemCount);
-        changeResult([listItems[idx]]);
-        console.log("Выиграл сектор:", idx, listItems[idx]);
+            setIsSpinning(false);
+            const idx = getWinnerIndex(normalized, itemCount);
+            changeResult([listItems[idx]]);
         }
     }
 
