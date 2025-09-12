@@ -1,7 +1,6 @@
 import { CircleSvg } from "./svg/circle";
 import { ColSvg } from "./svg/col";
 import { RowSvg } from "./svg/row";
-import { RemoveSvg } from "./svg/remove";
 import { useListStore } from "../stores/listStore";
 import { useDisplayStore } from "../stores/displayStore";
 import { Wheel } from "./Wheel";
@@ -36,12 +35,21 @@ export function RandomList () {
 
             { display !== "circle" ?
             <div className={layoutClass}>
-                {listItems.map((item,ind) => (
-                    <ListItem key={ind} text={item} item={item}/>
+                {listItems.map((item) => (
+                    <ListItem key={item.id} text={item.value} item={item.id}/>
                 ))}
             </div>
             :
-            <Wheel />}
+
+            <div className="list-circle">
+                <Wheel />
+                <div className="list-row">
+                    {listItems.map((item) => (
+                        <ListItem key={item.id} text={item.value} item={item.id}/>
+                    ))}
+                </div>
+            </div>
+            }
         </div>
     )
 }
@@ -54,10 +62,9 @@ type ListItem = {
 export function ListItem ({text, item}: ListItem) {
     const removeItem = useListStore((state) => state.removeItem);
     return (
-        <div className="list-item">
+        <div className="list-item" onClick={() => removeItem(item)}>
             <div className="text">{text}</div>
-            <div className="centered" onClick={() => removeItem(item)}>
-                <RemoveSvg />
+            <div className="list-item-btn abs-p">
             </div>
         </div>
     )

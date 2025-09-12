@@ -10,7 +10,7 @@ export const getRandomElement = (): string[] | undefined => {
 
   // Если нужно больше или столько же элементов, чем есть — перемешиваем весь массив
   if (quantity >= listItems.length) {
-    result = shuffle(listItems);
+    result = shuffle(listItems).map(i => i.value);
     changeResult(result);
     return result;
   }
@@ -21,7 +21,7 @@ export const getRandomElement = (): string[] | undefined => {
     randoms.add(Math.floor(Math.random() * listItems.length));
   }
 
-  result = [...randoms].map(i => listItems[i]);
+  result = [...randoms].map(i => listItems[i].value);
   changeResult(result);
   return result;
 };

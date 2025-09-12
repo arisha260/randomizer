@@ -1,4 +1,6 @@
-export const shuffle = (list: string[]): string[] => {
+import type { ListItem } from "../stores/listStore";
+
+export const shuffle = (list: ListItem[]): ListItem[] => {
   const arr = [...list];
 
   for (let i = arr.length - 1; i > 0; i--) {

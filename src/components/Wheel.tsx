@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from "react";
-import { useListStore } from "../stores/listStore";
+import { useListStore, type ListItem } from "../stores/listStore";
 import { spinWheel } from "../utils/spinWheel";
 import { fitTextDynamic } from "../utils/fitTextDynamic";
-// import { getWheelSegments } from "../utils/wheelOfFortune";
 
 export function Wheel (){
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -13,7 +12,7 @@ export function Wheel (){
   const size = 350;
 
   // функция отрисовки колеса
-  function drawWheel(ctx: CanvasRenderingContext2D, list: string[], size: number, rotation: number) {
+  function drawWheel(ctx: CanvasRenderingContext2D, list: ListItem[], size: number, rotation: number) {
 
     //! Стартовая отрисовка и позиционирование всего холста
     ctx.clearRect(0, 0, size, size); // очищаем холст
@@ -25,7 +24,7 @@ export function Wheel (){
 
     ctx.save();
     ctx.translate(centerX, centerY); // Сместить центр координат в центр круга
-    ctx.rotate(rotation);            // Повернуть всю сцену
+    ctx.rotate(rotation - Math.PI/2);            // Повернуть всю сцену
     ctx.translate(-centerX, -centerY); // Вернуть обратно
 
     //! Отрисовка фона круга
@@ -50,30 +49,33 @@ export function Wheel (){
       ctx.closePath();
       ctx.fill();
 
-      ctx.strokeStyle = "#242424";
-      ctx.lineWidth = 2;
-      ctx.stroke();
+      if (list.length > 1) {
+        ctx.strokeStyle = "#242424";
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
 
       ctx.save();
 
       ctx.translate(centerX, centerY);
       const midAngle = startAngle + angleStep / 2;
-      ctx.rotate(midAngle);
+      ctx.rotate(list.length > 1 ? midAngle : midAngle / 2);
 
       ctx.fillStyle = "#fff";
       ctx.textAlign = "center";
       ctx.textBaseline = "middle";
 
-      // Вычисляем максимальный размер шрифта для сектора
-      const arcLength = radius * angleStep;
-      const maxWidth = arcLength * 0.8; // текст чуть меньше длины дуги
-      const maxFontSize = 20; // базовый верхний предел
-
       // Получаем текст и размер шрифта
-      const { text: finalText, fontSize } = fitTextDynamic(ctx, item, maxWidth, maxFontSize);
-      ctx.font = `${fontSize}px Arial`;
+      const { text: finalText, fontSize } = fitTextDynamic(
+        ctx,
+        item.value,
+        list.length,
+        16,
+        10,
+        radius
+      );
 
-      // Рисуем текст
+      ctx.font = `${fontSize}px Arial`;
       ctx.fillText(finalText, radius * 0.7, 0);
 
       ctx.restore();
@@ -108,7 +110,7 @@ export function Wheel (){
   return (
     <div className="wheel">
       <canvas ref={canvasRef} width={size + 5} height={size + 5} />
-      <button className="text btn-r" onClick={handleSpin} disabled={isSpinning}>Крутить</button>
+      <button className="btn-r btn-abs" onClick={handleSpin} disabled={isSpinning || list.length === 0}></button>
     </div>
   );
 }

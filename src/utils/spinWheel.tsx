@@ -2,17 +2,20 @@ import { useListStore } from "../stores/listStore";
 
 function getWinnerIndex(rotation: number, itemCount: number) {
   // 1. Переводим радианы в градусы
-  let degrees = (rotation * 180 / Math.PI) % 360;
-  if (degrees < 0) degrees += 360;
+  const degrees = (rotation * 180 / Math.PI) % 360;
 
   // 2. Переворачиваем угол, потому что колесо крутится по часовой
   const pointerAngle = (360 - degrees) % 360;
 
-  // 3. Размер сектора
+  // 3. Переводим начало проверки индекса на верх как 0 градусов
+  const adjustedAngle = (pointerAngle + 90) % 360;
+
+  // 4. Размер сектора
   const anglePerSector = 360 / itemCount;
 
-  // 4. Вычисляем индекс сектора
-  return Math.floor(pointerAngle / anglePerSector);
+  // 5. Вычисляем индекс сектора
+  return Math.floor(adjustedAngle / anglePerSector);
+
 }
 
 
@@ -56,7 +59,7 @@ export function spinWheel(
         } else {
             setIsSpinning(false);
             const idx = getWinnerIndex(normalized, itemCount);
-            changeResult([listItems[idx]]);
+            changeResult([listItems[idx].value]);
         }
     }
 

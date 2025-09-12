@@ -41,7 +41,38 @@
 .list-col{
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 5px;
+}
+
+.list-item{
+    position: relative;
+    cursor: pointer;
+}
+
+.list-item-btn{
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    bottom: 0;
+    background-color: #ff0000;
+    opacity: 0;
+    transition: .3s ease;
+}
+
+.list-item:hover .list-item-btn{
+    bottom: 35%;
+    opacity: 1;
+}
+
+.abs-p{
+    &::after{
+        content: '';
+        position: absolute;
+        inset: 0;
+        height: 100%;
+    }
+
 }
 
 .list-row{
@@ -148,22 +179,6 @@
     background: transparent;
   }
 }
-
-
-
-.list-item{
-    max-width: 250px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-}
-
-// .list-item:hover .remove-icon{
-//     display: block;
-// }
-
-
 
 @keyframes swing {
 	0% {
