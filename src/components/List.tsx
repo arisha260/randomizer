@@ -63,7 +63,7 @@ export function ListItem ({text, item}: ListItem) {
     const removeItem = useListStore((state) => state.removeItem);
     return (
         <div className="list-item" onClick={() => removeItem(item)}>
-            <div className="text">{text}</div>
+            <div className="text list-item__text">{text}</div>
             <div className="list-item-btn abs-p">
             </div>
         </div>

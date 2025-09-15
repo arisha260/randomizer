@@ -109,7 +109,7 @@ export function Wheel (){
 
   return (
     <div className="wheel">
-      <canvas ref={canvasRef} width={size + 5} height={size + 5} />
+      <canvas ref={canvasRef} width={size} height={size} style={{ width: "100%", maxWidth: "350px", height: "auto" }} />
       <button className="btn-r btn-abs" onClick={handleSpin} disabled={isSpinning || list.length === 0}></button>
     </div>
   );
