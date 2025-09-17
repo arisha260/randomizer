@@ -9,7 +9,7 @@ import NumbersPage from './pages/NumbersPage.tsx';
 
 createRoot(document.getElementById('arishas-randomizer')!).render(
   <StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/randomizer">
       <div className='page'>
         <div className="container">
           <Logo />
