@@ -2,15 +2,25 @@ import { useListStore } from '../stores/listStore';
 import { shuffle } from './mixList';
 
 export const getRandomElement = (): string[] | undefined => {
-  const { quantity, listItems, changeResult } = useListStore.getState();
+  const { quantity, listItems, changeResult, isUnique } = useListStore.getState();
 
   if (listItems.length === 0 || quantity <= 0) return;
 
   let result: string[];
 
   // Если нужно больше или столько же элементов, чем есть — перемешиваем весь массив
-  if (quantity >= listItems.length) {
-    result = shuffle(listItems).map(i => i.value);
+  if (isUnique) {
+    if (quantity >= listItems.length) {
+      result = shuffle(listItems).map(i => i.value);
+      changeResult(result);
+      return result;
+    }
+  } else {
+    const res = [];
+    while (res.length < quantity){
+      res.push(Math.floor(Math.random() * listItems.length));
+    }
+    result = res.map(i => listItems[i].value);
     changeResult(result);
     return result;
   }

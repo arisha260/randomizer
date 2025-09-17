@@ -19,7 +19,7 @@ export function RandomList () {
         <div className="flex-30 list">
 
             <div className="flex-20-r">
-                <div className="text">Добавленное:</div>
+                <div className="title-20">Добавленное ({listItems.length}):</div>
                 <div className="flex-5-r">
                     <button className="btn-r" onClick={() => changeDisplay("col")}>
                         <ColSvg />

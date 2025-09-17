@@ -6,6 +6,7 @@ export function AddList () {
 
     const [value, setValue] = useState("");
     const addItem = useListStore((state) => state.addItem);
+    const error = useListStore((state) => state.error);
 
     const handleClick = () => {
         if (!value.trim()) return;
@@ -22,10 +23,11 @@ export function AddList () {
 
     return (
         <div className="flex-30">
-            <div className="text">Введите из чего выбирать</div>
+            <div className="title-20">Введите из чего выбирать</div>
             <div className="input-con">
                 <input type="text" value={value} onChange={(e) => setValue(e.target.value)} onKeyDown={handleKeyDown} className="text input input-reset" />
                 <button onClick={() => handleClick()} className="text button btn-r">Добавить</button>
+                <div className="text error">{error}</div>
             </div>
         </div>
     )
@@ -61,7 +63,7 @@ export function AddQuantity () {
 
     return (
         <div className="flex-30">
-            <div className="text">Сколько нужно получить</div>
+            <div className="title-20">Сколько нужно получить</div>
             <div className="input-con">
                 <input type="text"
                     value={value}

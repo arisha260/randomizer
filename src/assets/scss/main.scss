@@ -121,6 +121,13 @@
     word-wrap: break-word;
 }
 
+.error{
+    position: absolute;
+    font-size: var(--fz-12);
+    color: #ff0000;
+    bottom: -20px;
+}
+
 .button{
     display: flex;
     width: auto;
@@ -132,6 +139,7 @@
     display: flex;
     align-items: flex-end;
     gap: 5px;
+    position: relative;
 }
 
 .input{
@@ -142,7 +150,9 @@
     outline: none;
 }
 
-
+.random-res{
+    max-width: 350px;
+}
 
 @media (min-width: 57.5rem) {
     .random-res{

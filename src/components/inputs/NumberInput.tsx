@@ -1,12 +1,13 @@
 interface NumberInputProps {
   label: string;
+  secLabel?: string;
   value: string;
   onChange: (val: string) => void;
   onBlur: () => void;
 }
 
 
-export const NumberInput = ({ label, value, onChange, onBlur }: NumberInputProps) => (
+export const NumberInput = ({ label, secLabel, value, onChange, onBlur }: NumberInputProps) => (
     <div className="text flex-5-r">
         {label}
         <input
@@ -16,5 +17,6 @@ export const NumberInput = ({ label, value, onChange, onBlur }: NumberInputProps
             onChange={(e) => onChange(e.target.value.replace(/\D/g, ""))}
             onBlur={onBlur}
         />
+        {secLabel}
     </div>
 );

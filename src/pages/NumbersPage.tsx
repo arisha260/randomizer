@@ -4,6 +4,8 @@ import { inTheRange } from "../utils/inTheRange";
 import { useNumberStore } from "../stores/numberStore";
 import { NumberInput } from "../components/inputs/NumberInput";
 import { validateNumber } from "../utils/validateNumber";
+import { adaptingToTheNumber } from "../utils/adaptingToTheNumber";
+import { CheckboxInput } from "../components/inputs/CheckboxInput";
 
 export default function NumbersPage() {
     const { min, max, quantity, result, changeMin, changeMax, changeQuantity, changeResult } = useNumberStore();
@@ -12,6 +14,11 @@ export default function NumbersPage() {
     const [toValue, setToValue] = useState<string>(String(max));
     const [quantityValue, setQuantityValue] = useState<string>(String(quantity));
     const [isUnique, setIsUnique] = useState<boolean>(true);
+
+    const handleQuantity = (val: string) => {
+        const num = Number(val);
+        setQuantityValue(num > 500 ? "500" : val);
+    }
 
     const handleClick = () => {
         const numMin = Number(fromValue);
@@ -38,36 +45,28 @@ return (
         <div className="flex-5-c">
         <div className="flex-5-r">
             <NumberInput
-            label="от"
-            value={fromValue}
-            onChange={setFromValue}
-            onBlur={() => setFromValue(validateNumber(fromValue, 1))}
+                label="от"
+                value={fromValue}
+                onChange={setFromValue}
+                onBlur={() => setFromValue(validateNumber(fromValue, 1))}
             />
             <NumberInput
-            label="до"
-            value={toValue}
-            onChange={setToValue}
-            onBlur={() => setToValue(validateNumber(toValue, 1))}
+                label="до"
+                value={toValue}
+                onChange={setToValue}
+                onBlur={() => setToValue(validateNumber(toValue, 1))}
             />
         </div>
 
         <NumberInput
             label="получить"
+            secLabel={adaptingToTheNumber(Number(quantityValue))}
             value={quantityValue}
-            onChange={setQuantityValue}
+            onChange={handleQuantity}
             onBlur={() => setQuantityValue(validateNumber(quantityValue, 1))}
         />
 
-            <div className="text flex-5-r">
-                Только уникальные
-                <input
-                    type="checkbox"
-                    name="unique"
-                    checked={isUnique}
-                    onChange={(e) => setIsUnique(e.target.checked)}
-                    className="input-reset input-checkbox"
-                />
-            </div>
+        <CheckboxInput value={isUnique} onChange={setIsUnique}/>
         </div>
 
         <button onClick={handleClick} className="title-20 btn-r">
